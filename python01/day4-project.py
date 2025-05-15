@@ -16,7 +16,9 @@ def arithmetic_arranger(problems, show_answers=False):
         print(index_oper)
         print(oper)
         for k in i:
-            
+            #"32 + 698"
+            #"32 + 698", "3801 - 2", "45 + 43", "123 + 49"
+            #"apple orange".split() → ['apple', 'orange']
             if counter < index_oper and k != ' ':
                 
                 number1.append(k)
@@ -38,15 +40,6 @@ def arithmetic_arranger(problems, show_answers=False):
         elif oper == '-':
             total = number1 - number2
         print(f'total: {total}')    
-
-        #print(numberL)
-        
-        
-         
-     
-      
-      
-
     return
 
 print(f'\n{arithmetic_arranger(["32 + 698"])}')
