@@ -42,8 +42,10 @@ def arithmetic_arranger(problems, show_answers=False):
         print(f'total: {total}')    
     return
 
-print(f'\n{arithmetic_arranger(["32 + 698"])}')
 
+def main():
+    arithmetic_arranger(["32 + 698"])
+main()
 # ghan9sam l3amaliya naghd ra9m lwlani nhto f varibl otani f variable o l3alama f variable 
 #first number
 #operater
