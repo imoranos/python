@@ -23,6 +23,7 @@ emp1 = Employee("ahmed",25,"male", 2500)
 
 emp1.printall()
 
+
 class Manager:
     def __init__(self,name,id,location):
         self.name = name
