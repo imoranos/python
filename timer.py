@@ -2,14 +2,12 @@ def add_time(start, duration,day = ''):
     #change : to . in start anad duration -------
     new_start = start.replace(":",".")
     new_duration = duration.replace(':','.')
-
-
-    # detect period ------------ 
+    
+    # detect period ----------------------------- 
     if start.find('P') != -1:
         period_of_day = "PM"
         #print(period_of_day)
     else:
-        
         period_of_day = "AM"
         #print(period_of_day)
 
@@ -46,45 +44,68 @@ def add_time(start, duration,day = ''):
     count_hour = sum_hour
     count_minute = (sum_minute /0.60) % 1 * 0.6 + int(sum_minute /0.60)
     count_total = count_hour + count_minute
-    print(count_total)
+    print('count_total',count_total)
 
     test = int(count_total / 12)
     
     print('test = ',test)
     if test % 2!= 0 :
         if period_of_day == "PM":
-            period_of_day = "AM" 
+            next_period = " AM" 
         else:
-            period_of_day = "PM"
+            next_period = " PM"
     elif test % 2 == 0 :
         if period_of_day == "PM":
-            period_of_day = "PM" 
+            next_period = " PM" 
         else:
-            period_of_day = "AM"
+            next_period = " AM"
 
-    # custom next day ----------------------------
+    # custom next day --------------------------------
     next_day = ''
-    if count_total > 23.59 and count_total < 47.59:
-        next_day = ' ' + '(next day)'
+    if count_total < 24 and period_of_day == "PM" and next_period == " AM":
+        next_day = ' (next day)'
 
-    # custom next day ----------------------------
+    elif count_total > 23.59 and count_total < 36:
+        next_day = ' (next day)'
 
-    days = ['Monday',
-     'Tuesday',
-     'Wednesday',
-     'Thursday',
-     'Friday',
-     'Saturday',
-     'Sunday']
-     
     # custom number of days ----------------------------
+    sum_days = (round(count_total / 24))
     days_text = ''
-    #if sum_days > 23.59:
-    sum_days = round (count_total / 24)    
-    print('days',sum_days)
+    if count_total > 36:
+            
+        print('days',sum_days)
+        days_text = str(' ('+str(sum_days) + ' days later'')') 
     
-    days_text = ' ' + str(sum_days) + ' days later'
+    # custom days ---------------------------------------
+    name_day = ''
+    if day != '' and count_total > 23.59 :
+        days = ['Monday', 
+        'Tuesday', 
+        'Wednesday', 
+        'Thursday', 
+        'Friday', 
+        'Saturday', 
+        'Sunday']
+        
+        first_day = day.lower()
+        index_first_day = list(map(lambda x: x.lower(), days)).index(first_day)
+        print('index_first_day :',index_first_day)
 
+        print('num first day :',first_day)
+    
+        last_day  = 1 + sum_days +  index_first_day
+        print('last_day :',last_day)
+
+        for i in range(index_first_day,last_day):
+            if i >=6:
+                i = i % len(days)
+
+        name_day = ', ' + str( days[i]) 
+    elif day != '' and count_total < 24:
+        name_day = ', '+ day
+
+    
+    #-----------------------------------------------------
     if sum_hour > 12:
         #sum_hour = (sum_hour / 12 ) % 1 * 12
         sum_hour = float("{:.2f}".format((sum_hour / 12 ) % 1 * 12))
@@ -96,8 +117,7 @@ def add_time(start, duration,day = ''):
 
     sum_of_times = "{:.2f}".format(sum_hour + sum_minute) 
 
-    new_time = ''
-    new_time = str(sum_of_times).replace('.',':') + ' ' + period_of_day + days_text
+    new_time = str(sum_of_times).replace('.',':') + next_period + name_day+ next_day + days_text
 
     return new_time
 print(add_time('11:59 PM', '24:05'))
